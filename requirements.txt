@@ -13,6 +13,7 @@ isort
 safety
 celery
 django-celery-beat
+django-celery-results
 setuptools==67.7.2
 wheel==0.40.0
 black==23.3.0
