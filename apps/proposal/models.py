@@ -19,4 +19,4 @@ class Proposal(TimeStampedModel):
                  for status in enums.StatusProposal]
     )
 
-    adress = models.OneToOneField(Address, on_delete=models.DO_NOTHING)
+    address = models.OneToOneField(Address, on_delete=models.DO_NOTHING)
