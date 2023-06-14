@@ -12,7 +12,7 @@ from rest_framework.views import APIView
 
 from apps.proposal.models import Proposal
 from apps.proposal.serializers import ProposalSerializer
-from common.tasks import processar_proposta
+from common.celery import processar_proposta
 
 
 class ProposalViewSet(viewsets.ModelViewSet):
