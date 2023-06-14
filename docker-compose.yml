@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: orders_api
+    command: sh -c "./setup.sh"
+    volumes:
+      - .:/code
+    ports:
+      - 8080:8000
+    environment:
+      DBHOST: db
+    depends_on:
+      - db
+      - rabbitmq
+    restart: no
+  
+volumes:
+  postgres_data:
