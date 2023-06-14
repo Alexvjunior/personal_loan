@@ -18,12 +18,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: orders_api
+    container_name: personal_loan
     command: sh -c "./setup.sh"
     volumes:
       - .:/code
     ports:
-      - 8080:8000
+      - 8000:8000
     environment:
       DBHOST: db
     depends_on:

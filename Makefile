@@ -32,15 +32,15 @@ build:
 
 # Run the applications
 run: build
-	docker compose up web -d
+	docker compose up -d
 
 # Run the postgres application
 run-postgres:
 	docker compose up db -d
 
-# Run the redis application
-run-redis:
-	docker compose up redis -d	
+# Run the rabbitMQ application
+run-rabbit:
+	docker compose up rabbitmq -d	
 
 # Clean up
 clean:
