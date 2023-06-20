@@ -167,82 +167,56 @@ Returns a specific Proposal
 }
 ```
 
-### Endpoint 3: `/order/?limit=&offset=&cpf=`
+
+### Endpoint 3: `/proposal/{id}`
 #### Descrição:
-Returns a list of orders. You can user cpf filter too.
-#### Método HTTP:
-`GET`
-
-### Resposta
-```json
-"count": 1,
-"next": "string",
-"previous": "string",
-"results":[
-    {
-        "id": 1,
-        "created": "string",
-        "modified": "string",
-        "user_id": 0,
-        "item_description": "string",
-        "item_quantity": 0,
-        "item_price": 0,
-        "total_value": 0,
-    }
-]
-```
-
-### Endpoint 4: `/order/{id}`
-#### Descrição:
-Delete Order.
-#### Método HTTP:
-`DELETE`
-
-
-### Endpoint 5: `/order/{id}`
-#### Descrição:
-Update order.
+Update proposal.
 #### Método HTTP:
 `PATCH`
 
 ### Payload
 ```json
-"user_id": 0,
-"item_description": "string",
-"item_quantity": 0,
-"item_price": 0,
-"total_value": 0,
+{
+  "address": {
+    "street": "string",
+    "city": "string",
+    "number": "string",
+    "complement": "string",
+    "state": "string",
+    "postal_code": "stringst",
+    "country": "string"
+  },
+  "full_name": "string",
+  "cpf": "stringstrin",
+  "loan_amount": 0,
+  "status": "Pending"
+}
 ```
 
 ### Resposta
 ```json
-"id": 1,
-"created": "string",
-"modified": "string",
-"user_id": 0,
-"item_description": "string",
-"item_quantity": 0,
-"item_price": 0,
-"total_value": 0,
+{
+  "id": 0,
+  "address": {
+    "id": 0,
+    "created": "2023-06-20T21:26:37.693Z",
+    "modified": "2023-06-20T21:26:37.693Z",
+    "street": "string",
+    "city": "string",
+    "number": "string",
+    "complement": "string",
+    "state": "string",
+    "postal_code": "stringst",
+    "country": "string"
+  },
+  "created": "2023-06-20T21:26:37.693Z",
+  "modified": "2023-06-20T21:26:37.693Z",
+  "full_name": "string",
+  "cpf": "stringstrin",
+  "loan_amount": 0,
+  "status": "Pending"
+}
 ```
-
-### Endpoint 6: `/token/`
-#### Descrição:
-Get Token system User.
-#### Método HTTP:
-`POST`
-
-### Payload
-```json
-"username": "string",
-"password": "string",
-```
-
-### Resposta
-```json
-"token": "string",
-```
-
 
 ## **License**
 
