@@ -1,11 +1,16 @@
+import json
+import os
+from random import randint
+
 import pika
 import requests
-import json
-from random import randint
+
+RABBIT_HOST = os.environ.get("RABBIT_HOST", "localhost")
+WEB_HOST = os.environ.get("WEB_HOST", "localhost")
 
 # Configurações de conexão com o RabbitMQ
 credentials = pika.PlainCredentials('guest', 'guest')
-parameters = pika.ConnectionParameters('rabbitmq', 5672, '/', credentials)
+parameters = pika.ConnectionParameters(f'{RABBIT_HOST}', 5672, '/', credentials)
 connection = pika.BlockingConnection(parameters)
 channel = connection.channel()
 
@@ -20,7 +25,7 @@ def callback(ch, method, properties, body):
     message = json.loads(body.decode('utf-8'))
     try:
         response = requests.patch(
-            f'http://web:8000/proposal/{message["id"]}/', {"status": choice}
+            f'http://{WEB_HOST}:8000/proposal/{message["id"]}/', {"status": choice}
             )
         print(f"Mensagem Processada com sucesso: {response}")
     except Exception as e:

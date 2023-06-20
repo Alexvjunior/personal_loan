@@ -1,12 +1,13 @@
 
 from rest_framework import serializers
 
-from apps.proposal.models import Proposal
 from apps.address.serializers import AddressSerializer
+from apps.proposal.models import Proposal
 
 
 class ProposalSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
+
     class Meta:
         model = Proposal
         fields = "__all__"

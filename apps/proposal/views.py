@@ -5,6 +5,7 @@ from apps.proposal.models import Proposal
 from apps.proposal.serializers import ProposalSerializer
 from apps.proposal.services import ProposalService
 
+
 class ProposalViewSet(viewsets.ModelViewSet):
     serializer_class = ProposalSerializer
     service = ProposalService()
@@ -18,4 +19,8 @@ class ProposalViewSet(viewsets.ModelViewSet):
 
         headers = self.get_success_headers(serializer.data)
         self.service.publish_message(dict(serializer.data))
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers
+        )

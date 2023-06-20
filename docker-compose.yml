@@ -24,6 +24,8 @@ services:
       - rabbitmq
     environment:
       - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672/
+      - RABBIT_HOST=rabbitmq
+      - WEB_HOST=web
   web:
     build:
       context: .
@@ -36,6 +38,7 @@ services:
       - 8000:8000
     environment:
       DBHOST: db
+      RABBIT_HOST: rabbitmq
     depends_on:
       - db
       - rabbitmq
