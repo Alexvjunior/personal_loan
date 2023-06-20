@@ -1,31 +1,36 @@
-import os
-from celery import Celery
-from kombu import Queue
-from random import randint
+import pika
 import requests
+import json
+from random import randint
 
-# Defina a configuração do Django
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configs.settings')
+# Configurações de conexão com o RabbitMQ
+credentials = pika.PlainCredentials('guest', 'guest')
+parameters = pika.ConnectionParameters('rabbitmq', 5672, '/', credentials)
+connection = pika.BlockingConnection(parameters)
+channel = connection.channel()
 
-# Crie a instância do aplicativo Celery
-app = Celery('tasks')
-
-# Configuração do RabbitMQ
-app.conf.broker_url = 'amqp://guest:guest@rabbitmq:5672/'
-
-CELERY_QUEUES = (
-    Queue('proposal', routing_key='proposal'),
-)
-
-app.conf.task_queues = CELERY_QUEUES
-
-# Carregue as configurações do Celery a partir das configurações do Django
-app.config_from_object('django.conf:settings', namespace='CELERY')
-
-# Autodiscover das tarefas do Celery no seu projeto
-app.autodiscover_tasks()
+# Declaração da fila
+channel.queue_declare(queue='proposal', durable=True)
 
 
-@app.task(queue='proposal')
-def update_proposal(message):
-    print("updated")
+# Função que será executada quando uma mensagem for recebida
+def callback(ch, method, properties, body):
+    print(f"Mensagem recebida: {body.decode('utf-8')}")
+    choice = 'Reject' if randint(0, 1) else 'Approved'
+    message = json.loads(body.decode('utf-8'))
+    try:
+        response = requests.patch(
+            f'http://web:8000/proposal/{message["id"]}/', {"status": choice}
+            )
+        print(f"Mensagem Processada com sucesso: {response}")
+    except Exception as e:
+        print(f'Problems to update proposal: {e}')
+
+
+# Configuração do consumidor
+channel.basic_consume(
+    queue='proposal', on_message_callback=callback, auto_ack=True)
+
+print('Aguardando mensagens...')
+# Inicia a leitura de mensagens
+channel.start_consuming()

@@ -1,1 +1,1 @@
-celery -A tasks worker --loglevel=INFO
+python tasks.py
