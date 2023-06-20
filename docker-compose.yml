@@ -13,7 +13,17 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: sh -c "./celery_setup.sh"
+    volumes:
+      - .:/code
+    depends_on:
+      - rabbitmq
+    environment:
+      - CELERY_BROKER=amqp://guest:guest@rabbitmq:5672/
   web:
     build:
       context: .

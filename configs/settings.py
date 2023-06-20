@@ -135,10 +135,9 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CELERY_BROKER_URL = 'amqp://localhost'  # URL do broker do RabbitMQ
+CELERY_BROKER_URL = 'amqp://rabbitmq'  
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BROKER_HOSTNAME = 'localhost'
-CELERY_IMPORTS = ('common.tasks',)

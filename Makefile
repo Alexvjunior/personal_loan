@@ -42,6 +42,10 @@ run-postgres:
 run-rabbit:
 	docker compose up rabbitmq -d	
 
+# Run the celery application
+run-celery:
+	docker compose up celery -d	
+
 # Clean up
 clean:
 	rm -rf $(VENV_DIR)
