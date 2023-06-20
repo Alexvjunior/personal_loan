@@ -12,6 +12,10 @@ flake8
 isort
 safety
 celery
+django-celery-beat
+django-celery-results
+kombu
+pika
 setuptools==67.7.2
 wheel==0.40.0
 black==23.3.0
